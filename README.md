@@ -3,11 +3,11 @@ PubCal
 
 A simple tracking tool for publication submission deadlines and conference dates powered by:
 
-- AngularJS
-- Firebase
-- Bootstrap
-- jQuery
-- Underscore.js
+- [AngularJS](http://angularjs.org/)
+- [Firebase](https://www.firebase.com/)
+- [Bootstrap](http://getbootstrap.com/)
+- [jQuery](http://jquery.com/)
+- [Underscore.js](http://underscorejs.org/)
 
 Aren't libraries the best?
 
@@ -38,6 +38,6 @@ Usage
 Pretty much self explanatory. You can edit it concurrently with no real issues (unless you edit the exact 
 same event at the same time - last person to click save wins).
 
-Pretty simple right now, but hopefully useful.  Click an existing event to edit or remove it.  Add event 
+Simple for now, but hopefully useful.  Click an existing event to edit or remove it.  Add event 
 button is in the upper right.  Events are color coded by "tier".  If you don't know an exact date, but have 
 an idea of the usual month, enter 0 for the day.
