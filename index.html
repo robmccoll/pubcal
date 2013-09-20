@@ -1,0 +1,178 @@
+<!doctype html>
+<html ng-app="pubcal">
+  <head>
+    <title>PubCal: A Calendar for Tracking Deadlines and Event Dates</title>
+    <script src="lib/js/angular.min.js"></script>
+    <script src="lib/js/angular-resource.min.js"></script>
+    <script src="lib/js/firebase.js"></script>
+    <script src="lib/js/angularFire.js"></script>
+    <script src="lib/js/jquery-2.0.3.min.js"></script>
+    <script src="lib/js/underscore-min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="conf.js"></script>
+    <script src="lib/js/pubcal.js"></script>
+    <link href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+      .nomarg {
+	padding: 0px 8px;
+	margin: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div ng-controller="PubCalController">
+      <div class="navbar">
+	<div class="navbar-inner">
+	  <div class="container">
+	    <a class="brand" href="#">PubCal</a>
+	    <span class="text-center nomarg pull-right">
+	      <span class="brand">
+		<span class="label label-success">Tier 1</span>
+		<span class="label label-info">Tier 2</span>
+		<span class="label label-warning">Tier 3</span>
+		<span class="label label-important">Tier 4</span>
+	      </span>
+	      <a href="#editmodal" ng-click="createNew()" role="button" class="btn btn-success pull-right" data-toggle="modal">Add Event</a>
+	    </span>
+	  </div>
+	</div>
+      </div>
+      <div class="row-fluid" startup="{{ updateView() }}">
+	<div id="months" class="span2">
+	</div>
+	<div class="span10">
+	  <table id="maintable" width="100%">
+	  </table>
+	</div>
+	<div id="editmodal" class="modal hide fade">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>Edit Conference</h3>
+	  </div>
+	  <div class="modal-body">
+
+	    <form class="form-horizontal">
+	    <fieldset>
+
+	    <!-- Text input-->
+	    <div class="control-group">
+	      <label class="control-label" for="textname">Name</label>
+	      <div class="controls">
+		<input id="textname" ng-model="edit.name" name="textname" type="text" placeholder="" class="input-xlarge">
+		
+	      </div>
+	    </div>
+
+	    <!-- Text input-->
+	    <div class="control-group">
+	      <label class="control-label" for="textshort_name">Short Name</label>
+	      <div class="controls">
+		<input id="textshort_name" ng-model="edit.short_name" name="textshort_name" type="text" placeholder="" class="input-xlarge">
+		
+	      </div>
+	    </div>
+
+	    <!-- Select Basic -->
+	    <div class="control-group">
+	      <label class="control-label" for="selectstart_month">Submission Month</label>
+	      <div class="controls">
+		<select id="selectstart_month" ng-model="edit.start.month" name="selectstart_month" class="input-xlarge">
+		  <option>January</option>
+		  <option>February</option>
+		  <option>March</option>
+		  <option>April</option>
+		  <option>May</option>
+		  <option>June</option>
+		  <option>July</option>
+		  <option>August</option>
+		  <option>September</option>
+		  <option>October</option>
+		  <option>November</option>
+		  <option>December</option>
+		</select>
+	      </div>
+	    </div>
+
+	    <!-- Text input-->
+	    <div class="control-group">
+	      <label class="control-label" for="textstart_day">Submission Day</label>
+	      <div class="controls">
+		<input id="textstart_day" ng-model="edit.start.day" name="textstart_day" type="text" placeholder="" class="input-xlarge">
+		
+	      </div>
+	    </div>
+
+	    <!-- Select Basic -->
+	    <div class="control-group">
+	      <label class="control-label" for="selectend_month">Conference Month</label>
+	      <div class="controls">
+		<select id="selectend_month" ng-model="edit.end.month" name="selectend_month" class="input-xlarge">
+		  <option>January</option>
+		  <option>February</option>
+		  <option>March</option>
+		  <option>April</option>
+		  <option>May</option>
+		  <option>June</option>
+		  <option>July</option>
+		  <option>August</option>
+		  <option>September</option>
+		  <option>October</option>
+		  <option>November</option>
+		  <option>December</option>
+		</select>
+	      </div>
+	    </div>
+
+	    <!-- Text input-->
+	    <div class="control-group">
+	      <label class="control-label" for="textend_day">Conference Day</label>
+	      <div class="controls">
+		<input id="textend_day" ng-model="edit.end.day" name="textend_day" type="text" placeholder="" class="input-xlarge">
+		
+	      </div>
+	    </div>
+
+	    <!-- Textarea -->
+	    <div class="control-group">
+	      <label class="control-label" for="textdescription">Description</label>
+	      <div class="controls">                     
+		<textarea id="textdescription" ng-model="edit.description" name="textdescription"></textarea>
+	      </div>
+	    </div>
+
+	    <!-- Text input-->
+	    <div class="control-group">
+	      <label class="control-label" for="textcategories">Categories</label>
+	      <div class="controls">
+		<input id="textcategories" ng-model="edit.categories" name="textcategories" type="text" placeholder="" class="input-xlarge">
+		
+	      </div>
+	    </div>
+
+	    <!-- Select Basic -->
+	    <div class="control-group">
+	      <label class="control-label" for="selecttier">Tier</label>
+	      <div class="controls">
+		<select id="selecttier" ng-model="edit.tier" name="selecttier" class="input-xlarge">
+		  <option>1</option>
+		  <option>2</option>
+		  <option>3</option>
+		  <option>4</option>
+		</select>
+	      </div>
+	    </div>
+
+	    </fieldset>
+	    </form>
+
+	  </div>
+	  <div class="modal-footer">
+	    <a href="" class="btn" data-dismiss="modal">Close</a>
+	    <a href="" ng-click="removeCurrent()" class="btn btn-danger" data-dismiss="modal">Remove</a>
+	    <a href="" ng-click="createOrUpdate()" class="btn btn-primary" data-dismiss="modal">Save changes</a>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </body>
+</html>
