@@ -26,6 +26,9 @@
 	  <div class="container">
 	    <a class="brand" href="#">PubCal</a>
 	    <span class="text-center nomarg pull-right">
+	      <form class="navbar-search" style="margin-right: 20px;">
+		<input ng-model="searchstring" type="text" class="search-query" ng-change="updateFilter()" placeholder="Search">
+	      </form>
 	      <span class="brand">
 		<span class="label label-success">Tier 1</span>
 		<span class="label label-info">Tier 2</span>
